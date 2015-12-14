@@ -1,0 +1,21 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  host: 45.55.37.9
+  port: 3306
+  pool: 5
+  database: WakeUp
+  username: root
+  password: yamiboWXY921109
+
+production:
+  adapter: mysql2
+  reconnect: false
+  encoding: utf8
+  host: 45.55.37.9
+  port: 3306
+  pool: 5
+  database: WakeUp
+  username: root
+  password: yamiboWXY921109
+  
