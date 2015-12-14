@@ -1,6 +1,10 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
+  skip_before_filter :verify_authenticity_token,
+                     :if => Proc.new { |c| c.request.format == 'application/json' }
+  respond_to :json
+
 
   # GET /resource/sign_up
   # def new
@@ -11,6 +15,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def create
   #   super
   # end
+
+
+  acts_as_token_authentication_handler_for User
+
+
+
+
+  def create
+    build_resource(sign_up_params)
+    if resource.save
+      render :status => 200,
+             :json => { :success => true,
+                        :info => "Registered",
+                        :data => { :user => resource,
+                        } }
+    else
+      render :status => :unprocessable_entity,
+             :json => { :success => false,
+                        :info => resource.errors,
+                        :data => {} }
+    end
+  end
 
   # GET /resource/edit
   # def edit
