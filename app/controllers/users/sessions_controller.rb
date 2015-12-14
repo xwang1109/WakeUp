@@ -18,6 +18,7 @@ class Users::SessionsController < Devise::SessionsController
         warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
         render :status => 200, :json => { :success => true,
                                           :info => "Logged in",
+                                          :user_id => current_user.id,
                                           :data => { :auth_token => current_user.authentication_token }
                              }
       }
